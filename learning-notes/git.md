@@ -37,6 +37,7 @@ git status
 git add .
 #将跟踪文件提交至本地仓库
 git commit -m “注释消息内容”
+git p
 
 ```
 
