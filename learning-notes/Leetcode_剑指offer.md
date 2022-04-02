@@ -72,4 +72,60 @@
   }
   ```
 
+* 剑指offer 29.顺时针打印矩阵
+
+  ```java
+  //将矩阵的四个角定点 u,d,r,l
+  public int[] spiralOrder(int[][] matrix) {
+          if (matrix.length == 0)
+              return new int[0];
+          //矩阵的大小
+          int[] res = new int[matrix.length * matrix[0].length];
+          //矩阵：d=行，r=列
+          int u = 0, d = matrix.length - 1, l = 0, r = matrix[0].length - 1;
+          int index = 0;
+          while (true){
+              //遍历第一行，将元素装入res数组；
+              for (int i = l; i <= r; i++) {
+                  res[index++] = matrix[u][i];
+              }
+              if (++u > d) break;
+              for (int i = u; i <= d ; i++) {
+                  res[index++] = matrix[i][d];
+              }
+              if (--r < l) break;
+              for (int i = r; i >= l; i--) {
+                  res[index++] = matrix[d][i];
+              }
+              if (--d < u) break;
+
+              for (int i = d; i >= u; i--) {
+                  res[index++] = matrix[i][l];
+              }
+              if (++l > r) break;
+          }
+          return res;
+      }
+  ```
+
+* 剑指offer 50.第一次只出现一次的数
+
+  ```java
+  public char firstUniqChar(String s) {
+          if (s.equals("")) return ' ';
+          //创建‘a'-'z'的字典
+          int[] target = new int[26];
+          //第一次遍历，将字符统计到字典数组
+          for (int i = 0; i < s.length(); i++) {
+              target[s.charAt(i) - 'a']++;
+          }
+          //第二次遍历，从字典数组获取次数
+          for (int i = 0; i < s.length(); i++) {
+              if (target[s.charAt(i) - 'a'] == 1) return s.charAt(i);
+          }
+
+          return ' ';
+      }
+  ```
+
   ​
