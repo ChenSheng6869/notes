@@ -645,7 +645,7 @@ Autowired可以省去`<property name="args" ref="class">`
 
 直接在属性上添加即可也可以在set方式上使用
 
-使用Autowired可以不用编写set放啊，前提是这个自动装配的属性在IOC中存在，且符合byName
+使用Autowired可以不用编写set方法，前提是这个自动装配的属性在IOC中存在，且符合byName
 
 Autowired测试代码
 
