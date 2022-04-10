@@ -64,25 +64,91 @@
 # 4 链表
 
 - 6.从尾到头打印链表✅
-  - 利用栈:LinkedList<Integer>() stack = new LinkedList<>();📌
+  - **利用栈**:`LinkedList<Integer>() stack = new LinkedList<>();`📌
     - 1.入栈`stack.addLast(head.val)`
     - 2.出栈,放入数组`stack.removeLast()`
     - 3.返回数组
 
 ---
 
-- 18.1 在 O(1) 时间内删除链表节点
-  - ​
+- 18.1 删除链表节点✅
+
+  - 遍历链表,遍查遍删:`ListNode pre= head, cur = head.next;` 📌
+
+    - 1.头节点就是要删除的节点;`return head.next;`
+
+    - 2.遍历链表
+
+      ```java
+      while(cur != null && cur.val){
+          pre = cur;
+          cur = cur.next;
+      }
+      ```
+
+    - 3.删除节点
+
+      ```java
+      //更改指针的指向,将当前节点从链表中删除
+      if(cur != null) pre.next = cur.next;
+      ```
 
 ---
 
-- 18.2 删除链表中重复的结点
-- 22.链表中倒数第 K 个结点
-- 23.链表中环的入口结点
-- 24.反转链表
-- 25.合并两个排序的链表
-- 35.复杂链表的复制
-- 52.两个链表的第一个公共结点
+- 18.2 删除链表中重复的结点✅
+
+  - 重点:利用set的cotains方法,同18.1删除节点即可.**利用set集合**🚨
+
+    - 1.初始化链表前驱,后置节点;
+
+    - 2.**set用于保存节点的值** 🚨
+
+      `HashSet<Integer> visited = new HashSet<>();`
+
+    - 3.当前节点非空时,利用visited.cotains(cur.val)方法;
+
+    - 4.若存在,删除当前节点
+
+    - 5.不存在,继续遍历
+
+---
+
+- 22.链表中倒数第 K 个结点✅
+  - 使用**双指针**🚨
+    - 1.初始化节点,former,latter都指向头节点head
+    - 2.让former与latter之间相隔k步,former往后走,直至相隔k步.
+    - 3.当former为空时,former到链表尾部,与latter之间相隔k哥节点,latter节点即为所需要找的节点.
+
+---
+
+- 24.反转链表✅
+  - **方法1:迭代,利用双指针**`cur = head, pre = null;` 🚨
+    - 1.保存当前节点的下一个节点`ListNode temp = cur.next;` 
+    - 2.将当前节点指向空指针(修改引用)`cur.next = pre;`
+    - 3.将当前节点当作pre节点`pre = cur;`
+    - 4.将保存的临时节点(next节点给cur)`cur = temp;`
+  - **方法2:递归(待补充)** 🚩
+
+---
+
+- 25.合并两个排序的链表✅
+  - **方法:初始化新节点(链表)**,`ListNode l3 = new ListNode(0), cur = l3;`
+    - 0.l1,l2都不为空时(条件)
+    - 1.比较l1,l2结点val的大小
+    - 2.将小的节点插入
+    - 3.l1,l2为null
+    - 4.`cur.next = l1==null ? l2:l1`将后续链表节点插入
+    - 5.`return l3.next` ,l3头节点为空,返回后续节点即可.
+
+---
+
+- 35.复杂链表的复制(Middle)❎
+
+---
+
+- 52.两个链表的第一个公共结点(Middle)❎
+
+---
 
 # 5 树
 
