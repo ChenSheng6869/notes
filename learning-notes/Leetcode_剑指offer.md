@@ -144,19 +144,58 @@
 
 ---
 
-- 35.复杂链表的复制(Middle)❎
+- 35.复杂链表的复制(medium)❎
 
 ---
 
-- 52.两个链表的第一个公共结点(Middle)❎
+- 52.两个链表的第一个公共结点(medium)❎
 
 ---
 
 # 5 树
 
-- 7.重建二叉树
+- 7.重建二叉树✅（medium）
+
+  - 递归，回溯，根据中序遍历判断左右子树边界。
+    - 要点：利用HashMap保存中序遍历，根据中序遍历区分根，左右子树🚨
+
+  ```java
+  class RebuildTheBinaryTree {
+      int[] preorder;
+      //用于标记中序遍历
+      Map<Integer, Integer> map = new HashMap<>();
+
+      public TreeNode buildTree(int[] preorder, int[] inorder) {
+          this.preorder = preorder;
+          //将中序遍历数组存入map,<key,value>,map.get获取的是value值
+          for (int i = 0; i < inorder.length; i++) {
+              map.put(inorder[i],i);
+          }
+          return recur(0,0,inorder.length-1);
+      }
+      
+      TreeNode recur(int root, int left, int right){
+          //相等就是自己
+          if (left > right) return null;
+          //1.建立根节点
+          TreeNode node = new TreeNode(preorder[root]);
+          //2.获取根节点在中序遍历中的索引，划分左右子树(map.get获取的是value值)
+          int i = map.get(preorder[root]);
+          //3.左子树根节点，左边界，右边界。
+          node.left = recur(root+1, left, i-1);
+          //4.右子树的根节点，左边界，右边界。(右子树根节点索引 = 根节点+左子树长度+1)
+          node.right = recur(i-left+root+1, i+1, right);
+          //5.回溯返回根节点
+          return node;
+      }
+  }
+  ```
+
+---
+
 - 8.二叉树的下一个结点
 - 26.树的子结构
+  - ​
 - 27.二叉树的镜像
 - 28.对称的二叉树
 - 32.1 从上往下打印二叉树
