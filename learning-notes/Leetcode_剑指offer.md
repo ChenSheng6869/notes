@@ -194,20 +194,48 @@
 ---
 
 - 8.二叉树的下一个结点
+
 - 26.树的子结构
-  - ​
+  ```java
+  public boolean isSubStructure(TreeNode A, TreeNode B) {
+          return (A != null && B != null) && (recur(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B));
+      }
+      boolean recur(TreeNode A, TreeNode B) {
+          if(B == null) return true;
+          if(A == null || A.val != B.val) return false;
+          return recur(A.left, B.left) && recur(A.right, B.right);
+      }
+
+  作者：jyd
+  链接：https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/solution/mian-shi-ti-26-shu-de-zi-jie-gou-xian-xu-bian-li-p/
+  来源：力扣（LeetCode）
+  著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  ```
+
 - 27.二叉树的镜像
+
 - 28.对称的二叉树
+
 - 32.1 从上往下打印二叉树
+
 - 32.2 把二叉树打印成多行
+
 - 32.3 按之字形顺序打印二叉树
+
 - 33.二叉搜索树的后序遍历序列
+
 - 34.二叉树中和为某一值的路径
+
 - 36.二叉搜索树与双向链表
+
 - 37.序列化二叉树
+
 - 54.二叉查找树的第 K 个结点
+
 - 55.1 二叉树的深度
+
 - 55.2 平衡二叉树
+
 - 68.树中两个节点的最低公共祖先
 
 # 6 贪心思想
@@ -272,4 +300,38 @@
 - 65.不用加减乘除做加法
 - 67.把字符串转换成整数
 
-​
+# 15 360笔试
+
+在某个仓库中，堆积了很多的货物，每个货物是一个正方体的，边长为1。所有货物恰好堆积成一个长方体，边长为R * C * L。
+目前，在某次确认货物的时候，管理员意识到这一堆货物被小偷偷走了一些。
+这个小偷将原来的R * C * L的货物组成的长方体偷成了恰好(R - 2) * (C - 1) * (L - 2)的长方体。
+但是管理员记不得R、C、L的具体数值了，他只能计算现在的货物总数。他希望算出来最坏情况下被偷了多少的货物，输出这个最坏的值。输入
+输入为一个数 n，表示题面中的(R - 2) * (C - 1) * (L - 2)
+
+输出
+输出为一个数，表示最坏情况下被偷了多少的货物
+
+样例输入
+4
+
+样例输出
+41
+
+提示
+对于100%的数据：1 <= n <= 109
+样例解释：R = 3, C = 5, L = 3, 3 * 5 * 3 - (3 - 2) * (5 - 1) * (3 - 2) = 41
+
+```java
+//原体积R*C*L
+//现体积(R - 2) * (C - 1) * (L - 2)
+//被偷走的体积：（R0+2*C0+1*L0+1） - (R - 2) * (C - 1) * (L - 2)
+//
+public class Solution {
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        long n = in.nextLong();
+        System.out.println(3*3*(n+1)-n);
+    }
+}
+```
+
