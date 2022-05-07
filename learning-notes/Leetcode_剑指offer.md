@@ -164,7 +164,7 @@
       int[] preorder;
       //用于标记中序遍历
       Map<Integer, Integer> map = new HashMap<>();
-
+  
       public TreeNode buildTree(int[] preorder, int[] inorder) {
           this.preorder = preorder;
           //将中序遍历数组存入map,<key,value>,map.get获取的是value值
@@ -195,7 +195,8 @@
 
 - 8.二叉树的下一个结点
 
-- 26.树的子结构
+- 26.树的子结构❓
+  
   ```java
   public boolean isSubStructure(TreeNode A, TreeNode B) {
           return (A != null && B != null) && (recur(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B));
@@ -205,18 +206,90 @@
           if(A == null || A.val != B.val) return false;
           return recur(A.left, B.left) && recur(A.right, B.right);
       }
+  ```
+  
+  ---
+  
+- 27.二叉树的镜像🎯
 
-  作者：jyd
-  链接：https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/solution/mian-shi-ti-26-shu-de-zi-jie-gou-xian-xu-bian-li-p/
-  来源：力扣（LeetCode）
-  著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  - 递归，递归遍历（DFS）二叉树，交换每个节点的左右子节点，生成二叉树镜像。
+
+    - 递归解析🧵
+
+      终止条件：节点为空，遍历至叶子节点，返回null
+
+      递归过程：1.初始化临时节点，用于左右节点互换
+
+      ​				   2.递归右子节点，作为根的左子节点
+
+      ​				   3.递归左子节点，作为跟的右子节点
+
+      返回：返回root
+
+
+  ```java
+  public class MirrorTree {
+      public TreeNode mirrorTree(TreeNode root){
+          if (root == null) return null;
+          TreeNode tmp = root.left;
+          root.left = mirrorTree(root.right);
+          root.right = mirrorTree(tmp);
+          return root;
+      }
+  }
   ```
 
-- 27.二叉树的镜像
+  ---
 
-- 28.对称的二叉树
+- 28.对称的二叉树✅
 
-- 32.1 从上往下打印二叉树
+  - 解析：对称，左节点==右节点，左子树的左子节点==右子树的右子节点，左子树的右子节点==右子树的左子节点
+
+  ```java
+  public class SymmetricTree {
+      public boolean isSymmetic(TreeNode root){
+          return root == null ? true : recur(root.left, root.right);
+      }
+      boolean recur(TreeNode L, TreeNode R){
+          if (L == null && R == null) return true;
+          if (L == null || R == null || L.val != R.val) return false;
+          return recur(L.left,R.right) && recur(L.right,R.left);
+      }
+  }
+  ```
+
+  ---
+
+- 32.1 从上往下打印二叉树✅
+
+  - 解析：广度优先搜索（BFS），BFS常借助队列实现
+  - 实现：当前节点入队，左右子节点入队，依次出队放入res数组
+
+  ```java
+  public class PrintTree {
+      public int[] levelOrder(TreeNode root){
+          if (root == null) return new int[0];
+          Queue<TreeNode> queue = new LinkedList<>();
+          ArrayList<Integer> ans = new ArrayList<>();
+          queue.offer(root);
+          while (!queue.isEmpty()){
+              //返回第一个元素并从队列中删除
+              TreeNode node = queue.poll();
+              ans.add(node.val);
+              //将左右子节点放入队列中
+              if (root.left != null) queue.add(node.left);
+              if (root.right != null) queue.add(node.right);
+          }
+          int[] res = new int[ans.size()];
+          for (int i = 0; i < res.length; i++) {
+              res[i] = ans.get(i);
+          }
+          return res;
+      }
+  }
+  ```
+
+  
 
 - 32.2 把二叉树打印成多行
 
