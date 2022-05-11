@@ -239,7 +239,7 @@
   }
   ```
 
-  ---
+---
 
 - 28.对称的二叉树✅
 
@@ -277,8 +277,8 @@
               TreeNode node = queue.poll();
               ans.add(node.val);
               //将左右子节点放入队列中
-              if (root.left != null) queue.add(node.left);
-              if (root.right != null) queue.add(node.right);
+              if (node.left != null) queue.add(node.left);
+              if (node.right != null) queue.add(node.right);
           }
           int[] res = new int[ans.size()];
           for (int i = 0; i < res.length; i++) {
@@ -289,13 +289,86 @@
   }
   ```
 
-  
+  ---
 
-- 32.2 把二叉树打印成多行
+  > 🛸
+  >
+  > **add 增加一个元素 如果队列已满，则抛出一个IIIegaISlabEepeplian异常**
+  >
+  > **remove 移除并返回队列头部的元素 如果队列为空，则抛出一个NoSuchElementException异常**
+  >
+  > **element 返回队列头部的元素 如果队列为空，则抛出一个NoSuchElementException异常**
+  >
+  > **offer 添加一个元素并返回true 如果队列已满，则返回false**
+  >
+  > **poll 移除并返问队列头部的元素 如果队列为空，则返回null**
+  >
+  > **peek 返回队列头部的元素 如果队列为空，则返回null**
+  >
+  > **put 添加一个元素 如果队列满，则阻塞**
+  >
+  > **take 移除并返回队列头部的元素 如果队列为空，则阻塞**
+
+  ---
+
+- 32.2 把二叉树打印成多行✅
+
+  - 解析：在32.1基础上，将每一层节点放入tmp列表，将tmp放入res列表，返回res🎯
+
+  ```java
+  public List<List<Integer>> levelOrder(TreeNode root){
+          Queue<TreeNode> queue = new LinkedList<>();
+          List<List<Integer>> res = new ArrayList<>();
+          if (root != null) queue.add(root);
+          while (!queue.isEmpty()){
+              List<Integer> tmp = new ArrayList<>();
+              for (int i = queue.size(); i > 0; i--) {
+                  //返回第一个元素并从队列中删除
+                  TreeNode node = queue.poll();
+                  tmp.add(node.val);
+                  //将左右子节点放入队列中
+                  if (node.left != null) queue.add(node.left);
+                  if (node.right != null) queue.add(node.right);
+              }
+              //将tmp列表放入res列表中
+              res.add(tmp);
+          }
+          return res;
+      }
+  ```
+
+  ---
 
 - 32.3 按之字形顺序打印二叉树
 
 - 33.二叉搜索树的后序遍历序列
+
+  - 解析
+
+    - 方法一，递归，利用二叉搜索树，左子节点都小于根，右子节点都大于根，左右子树同理。
+
+      根据二叉搜索树的特性，判断所有子树的正确性，如果所有子树都正确，就是此二叉树的后序遍历。
+
+    ```java
+    public class PostOrder {
+        public boolean verifyPostorder(int[] postorder){
+            return recur(postorder, 0, postorder.length-1);
+        }
+        boolean recur(int[] postorder , int i, int j){
+            if (i >= j) return true;
+            //遍历左子树，验证左子树序列
+            int p = i;
+            while (postorder[p] < postorder[j]) p++;
+            //遍历右子树，验证右子树序列
+            int m = p;
+            while (postorder[p] > postorder[j]) p++;
+            //左子树在后序遍历序列中的索引：(i, m-1)   j：root
+            //右子树在后序遍历序列中的索引：(m, j-1)
+            return p==j && recur(postorder, i, m-1) &&recur(postorder, m, j-1);
+        }
+    }
+    
+    ```
 
 - 34.二叉树中和为某一值的路径
 
@@ -310,6 +383,58 @@
 - 55.2 平衡二叉树
 
 - 68.树中两个节点的最低公共祖先
+
+---
+
+**每日一题**
+
+2022.5.11,序列化搜索二叉树，反序列化搜索二叉树
+
+```java
+public class SerializeBinaryTrees {
+    //1.序列化二叉搜索树，返回值类型为字符串
+    public String serialize(TreeNode root){
+        List<Integer> list = new ArrayList<>();
+        postOrder(root, list);
+        String str = list.toString();
+        return str.substring(1,str.length()-1);
+    }
+
+    //2.反序列化字符串，返回值为二叉搜索树
+    public TreeNode deserialize(String data){
+        if (data.isEmpty()) return null;
+        String[] arr = data.split(",");
+        Deque<Integer> stack = new ArrayDeque<>();
+        int len = arr.length;
+        for (int i = 0; i < len; i++) {
+            stack.push(Integer.parseInt(arr[i]));
+        }
+        return construct(Integer.MIN_VALUE, Integer.MAX_VALUE, stack);
+    }
+
+    //3.后续遍历，添加进list
+    private void postOrder(TreeNode root, List<Integer> list){
+        if (root == null) return;
+        postOrder(root.left, list);
+        postOrder(root.right, list);
+        list.add(root.val);
+    }
+
+    //4.构建搜索二叉树
+    private TreeNode construct(int lower, int upper, Deque<Integer> stack){
+        if (stack.isEmpty() || stack.peek() < lower || stack.peek() > upper){
+            return null;
+        }
+        int val = stack.pop();
+        TreeNode root = new TreeNode(val);
+        root.right = construct(val, upper, stack);
+        root.left = construct(lower, val, stack);
+        return root;
+    }
+}
+```
+
+
 
 # 6 贪心思想
 
