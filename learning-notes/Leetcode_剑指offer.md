@@ -341,7 +341,7 @@
 
 - 32.3 按之字形顺序打印二叉树
 
-- 33.二叉搜索树的后序遍历序列
+- 33.二叉搜索树的后序遍历序列✅
 
   - 解析
 
@@ -371,6 +371,46 @@
     ```
 
 - 34.二叉树中和为某一值的路径
+
+  - 🎯解析：先序遍历+路径记录
+
+  - 递推流程：1.当前节点加入path
+
+    ​				   2.target-=root.val，直至target为0
+
+    ​				   3.记录路径
+
+    ​				   4.先序：递归左右子节点
+
+    ​				   5.递归回溯时，将当前节点从path中删除，path.pop()
+
+    ```java
+    public class PathSum {
+        //返回的所有最终路径
+        LinkedList<List<Integer>> res = new LinkedList<>();
+        //列表path用于保存路径
+        LinkedList<Integer> path = new LinkedList<>();
+        public List<List<Integer>> pathSum(TreeNode root, int sum){
+            recur(root, sum);
+            return res;
+        }
+    
+        public void recur(TreeNode root, int tar){
+            //空节点，返回
+            if (root == null) return;
+            //将节点值添加进路径
+            path.add(root.val);
+            tar-=root.val;
+            //tar值为0时,且遍历至叶子节点,将列表path添加进最终列表res
+            if (tar == 0 && root.right == null && root.left == null)
+                res.add(new LinkedList<>(path));
+            recur(root.left, tar);
+            recur(root.right, tar);
+            //回溯将上一个不符合路径的值移除至列表
+            path.removeLast();
+        }
+    }   
+    ```
 
 - 36.二叉搜索树与双向链表
 
@@ -434,7 +474,28 @@ public class SerializeBinaryTrees {
 }
 ```
 
+2022.5.12,字符串数组列排序，删除不是升序的列。
 
+```java
+public class MinDeletionSize {
+    public int minDeletionSize(String[] strs){
+        int row = strs.length;
+        int col = strs[0].length();
+        int count = 0;
+        //i：列，从开始遍历，逐行比较每列对应的的值再字典中是否为升序
+        for (int i = 0; i < col; i++) {
+            for (int j = 1; j < row; j++) {
+                if (strs[j-1].charAt(i) > strs[j].charAt(i)){
+                    count++;
+                    //跳回第一层循环，比较下一列
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+}
+```
 
 # 6 贪心思想
 
