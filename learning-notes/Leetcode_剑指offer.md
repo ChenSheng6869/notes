@@ -414,6 +414,60 @@
 
 - 36.二叉搜索树与双向链表
 
+  - 🎯解析：中序遍历+构造双向链表
+
+  - 代码：
+
+    ```java
+    class Node {
+        public int val;
+        public Node left;
+        public Node right;
+    
+        public Node() {
+        }
+    
+        public Node(int val) {
+            this.val = val;
+        }
+    
+        public Node(int val, Node left, Node right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    
+    public class TreeToDoublyList {
+        //相邻节点的引用关系
+        //pre：前驱节点  cur：当前节点
+        //pre.right = cur;  cur.left = pre;
+        //循环链表
+        //头节点：head  尾节点：tail
+        //head.left = tail; tail.right = head;
+        Node pre, head;
+        //二叉搜索树构建链表
+        public Node treeToDoublyList(Node root){
+            if (root == null) return null;
+            dfs(root);
+            head.left = pre;
+            pre.right = head;
+            return head;
+        }
+    
+        //打印中序遍历
+        public void dfs(Node cur){
+            if (cur == null) return;
+            dfs(cur.left);
+            if (pre != null) pre.right = cur;
+            else head = cur;
+            cur.left = pre;
+            pre = cur;
+            dfs(cur.right);
+        }
+    }
+    ```
+
 - 37.序列化二叉树
 
 - 54.二叉查找树的第 K 个结点
@@ -427,6 +481,8 @@
 ---
 
 **每日一题**
+
+### 2022.5
 
 2022.5.11,序列化搜索二叉树，反序列化搜索二叉树
 
@@ -496,6 +552,34 @@ public class MinDeletionSize {
     }
 }
 ```
+
+2022.5.13 字符串有三种编辑操作:插入一个字符、删除一个字符或者替换一个字符。 给定两个字符串，编写一个函数判定它们是否只需要一次(或者零次)编辑。
+
+```java
+class Solution {
+    public boolean oneEditAway(String first, String second){
+        //只需要一次编辑就可以让两次输入的字符串相等
+        int len = first.length() - second.length();
+        if (len > 1 || len  < -1) return false;
+        int count = 1;
+        for (int i = 0, j = 0; i < first.length() && j < second.length(); i++,j++) {
+            if (first.charAt(i) != second.charAt(j)){
+                if (len == 1){
+                    j--;
+                } else if (len == -1){
+                    i--;
+                }
+                //保证字符串只修改一次
+                count --;
+            }
+        }
+        //优化返回值
+        return count < 0 ? false : true;
+    }
+}
+```
+
+
 
 # 6 贪心思想
 
