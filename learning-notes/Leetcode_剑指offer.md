@@ -43,7 +43,7 @@
 
   - 小顶堆+大顶堆
 
-  - ```java
+  - ```
     Queue<Integer> A,B;
     A = new PriorityQueue<>();//小顶堆
     B = new PriorityQueue<>((x,y)->(y-x));//lambda表达式表示大顶堆
@@ -81,7 +81,7 @@
 
     - 2.遍历链表
 
-      ```java
+      ```
       while(cur != null && cur.val){
           pre = cur;
           cur = cur.next;
@@ -90,7 +90,7 @@
 
     - 3.删除节点
 
-      ```java
+      ```
       //更改指针的指向,将当前节点从链表中删除
       if(cur != null) pre.next = cur.next;
       ```
@@ -159,7 +159,7 @@
   - 递归，回溯，根据中序遍历判断左右子树边界。
     - 要点：利用HashMap保存中序遍历，根据中序遍历区分根，左右子树🚨
 
-  ```java
+  ```
   class RebuildTheBinaryTree {
       int[] preorder;
       //用于标记中序遍历
@@ -197,7 +197,7 @@
 
 - 26.树的子结构❓
   
-  ```java
+  ```
   public boolean isSubStructure(TreeNode A, TreeNode B) {
           return (A != null && B != null) && (recur(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B));
       }
@@ -227,7 +227,7 @@
       返回：返回root
 
 
-  ```java
+  ```
   public class MirrorTree {
       public TreeNode mirrorTree(TreeNode root){
           if (root == null) return null;
@@ -245,7 +245,7 @@
 
   - 解析：对称，左节点==右节点，左子树的左子节点==右子树的右子节点，左子树的右子节点==右子树的左子节点
 
-  ```java
+  ```
   public class SymmetricTree {
       public boolean isSymmetic(TreeNode root){
           return root == null ? true : recur(root.left, root.right);
@@ -265,7 +265,7 @@
   - 解析：广度优先搜索（BFS），BFS常借助队列实现
   - 实现：当前节点入队，左右子节点入队，依次出队放入res数组
 
-  ```java
+  ```
   public class PrintTree {
       public int[] levelOrder(TreeNode root){
           if (root == null) return new int[0];
@@ -315,7 +315,7 @@
 
   - 解析：在32.1基础上，将每一层节点放入tmp列表，将tmp放入res列表，返回res🎯
 
-  ```java
+  ```
   public List<List<Integer>> levelOrder(TreeNode root){
           Queue<TreeNode> queue = new LinkedList<>();
           List<List<Integer>> res = new ArrayList<>();
@@ -349,7 +349,7 @@
 
       根据二叉搜索树的特性，判断所有子树的正确性，如果所有子树都正确，就是此二叉树的后序遍历。
 
-    ```java
+    ```
     public class PostOrder {
         public boolean verifyPostorder(int[] postorder){
             return recur(postorder, 0, postorder.length-1);
@@ -384,7 +384,7 @@
 
     ​				   5.递归回溯时，将当前节点从path中删除，path.pop()
 
-    ```java
+    ```
     public class PathSum {
         //返回的所有最终路径
         LinkedList<List<Integer>> res = new LinkedList<>();
@@ -418,7 +418,7 @@
 
   - 代码：
 
-    ```java
+    ```
     class Node {
         public int val;
         public Node left;
@@ -486,7 +486,7 @@
 
 2022.5.11,序列化搜索二叉树，反序列化搜索二叉树
 
-```java
+```
 public class SerializeBinaryTrees {
     //1.序列化二叉搜索树，返回值类型为字符串
     public String serialize(TreeNode root){
@@ -532,7 +532,7 @@ public class SerializeBinaryTrees {
 
 2022.5.12,字符串数组列排序，删除不是升序的列。
 
-```java
+```
 public class MinDeletionSize {
     public int minDeletionSize(String[] strs){
         int row = strs.length;
@@ -555,7 +555,7 @@ public class MinDeletionSize {
 
 2022.5.13 字符串有三种编辑操作:插入一个字符、删除一个字符或者替换一个字符。 给定两个字符串，编写一个函数判定它们是否只需要一次(或者零次)编辑。
 
-```java
+```
 class Solution {
     public boolean oneEditAway(String first, String second){
         //只需要一次编辑就可以让两次输入的字符串相等
@@ -664,7 +664,7 @@ class Solution {
 对于100%的数据：1 <= n <= 109
 样例解释：R = 3, C = 5, L = 3, 3 * 5 * 3 - (3 - 2) * (5 - 1) * (3 - 2) = 41
 
-```java
+```
 //原体积R*C*L
 //现体积(R - 2) * (C - 1) * (L - 2)
 //被偷走的体积：（R0+2*C0+1*L0+1） - (R - 2) * (C - 1) * (L - 2)
